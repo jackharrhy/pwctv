@@ -15,8 +15,8 @@ iframe {
   color: white;
 }
 #footer p {
-  font-size: 2rem;
-  padding: 0.85rem 1rem;
+  font-size: 2.2rem;
+  padding: 0 100px;
 }
 #footer #date {
   float: left;
