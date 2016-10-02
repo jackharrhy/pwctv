@@ -5,7 +5,9 @@ html
 		link(rel="stylesheet", href="css/pwctv.css")
 
 	body
-		iframe(src="https://docs.google.com/presentation/d/19qQxY1tHxxi1iUcQaSD5RvHze06p1_rSAbfPok0YKKM/embed?start=true&loop=true&delayms=7000", frameborder="0", width="100%", height="80%", allowfullscreen="true", mozallowfullscreen="true", webkitallowfullscreen="true")
+		#mainContainer
+			iframe#slides(src="https://docs.google.com/presentation/d/19qQxY1tHxxi1iUcQaSD5RvHze06p1_rSAbfPok0YKKM/embed?start=true&loop=true&delayms=7000", frameborder="0", width="100%", height="100%", allowfullscreen="true", mozallowfullscreen="true", webkitallowfullscreen="true")
+			video#player(autoplay, muted)
 
 		#footer
 			p #[span#date Loading...] #[span#time Loading...]
