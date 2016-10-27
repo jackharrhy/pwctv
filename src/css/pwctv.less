@@ -1,3 +1,7 @@
+html, body {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
@@ -11,34 +15,39 @@ body {
 		height: 80%;
 		width: 100%;
 	}
-	#footer {
-		position: absolute;
-		top: 80%;
-
-		height: 20%;
-		width: 100%;
-
-		background-color: #222;
-		color: white;
-
-		p {
-			font-size: 4vw;
-			padding: 0 10%;
-		}
-
-		#footerDate {
-			float: left;
-		}
-		#footerTime {
-			float: right;
-		}
-	}
 }
 
 #videoContainer {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #222;
 	#video {
-		height: 100%;
 		width: 100%;
+	}
+}
+
+#footer {
+	position: absolute;
+	top: 80%;
+
+	height: 20%;
+	width: 100%;
+
+	background-color: #222;
+	color: white;
+
+	p {
+		font-size: 4vw;
+		padding: 0 10%;
+	}
+
+	#footerDate {
+		float: left;
+	}
+	#footerTime {
+		float: right;
 	}
 }
 

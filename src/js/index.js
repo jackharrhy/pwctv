@@ -1,6 +1,6 @@
 function switchContainer(toSwitchTo) {
 	$(current.main).fadeOut(1000);
-	$(toSwitchTo).fadeIn(1000);
+	$(toSwitchTo.main).fadeIn(1000);
 
 	toSwitchTo.initial();
 	current = toSwitchTo;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 			},
 		
 			initial: function() {
-				setTimeout(switchContainer(container.video), 1000);
+				setTimeout(switchContainer.bind(null, container.video), 300000);
 			},
 			loop: function() {
 				var currentDate = new Date();
@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 			initial: function() {
 				this.video.onended = function() {
-					setTimeout(switchContainer(container.slides), 10000);
+					console.log('end');
+					switchContainer(container.slides);
 				}
 
 				this.video.src = 'http://jackharrhy.com/videos/pwctv/'+this.videos[Math.floor(Math.random() * this.videos.length)]+'_PWCTV.mp4';
