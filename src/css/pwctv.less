@@ -3,43 +3,42 @@ body {
 	font-family: Helvetica, sans-serif;
 }
 
-#slides {
-	position: absolute;
-	top: 0;
-}
+#slidesContainer {
+	#slides {
+		position: absolute;
+		top: 0;
 
-#player {
-	display: none;
-	height: 100%;
-	width: 100%;
-}
-
-#mainContainer {
-	position: absolute;
-	width: 100%;
-	height: 80%;
-	background-color: black;
-}
-
-#footer {
-	position: absolute;
-	top: 80%;
-
-	height: 20%;
-	width: 100%;
-
-	background-color: #222;
-	color: white;
-
-	p {
-		font-size: 4vw;
-		padding: 0 10%;
+		height: 80%;
+		width: 100%;
 	}
+	#footer {
+		position: absolute;
+		top: 80%;
 
-	#date {
-		float: left;
-	}
-	#time {
-		float: right;
+		height: 20%;
+		width: 100%;
+
+		background-color: #222;
+		color: white;
+
+		p {
+			font-size: 4vw;
+			padding: 0 10%;
+		}
+
+		#footerDate {
+			float: left;
+		}
+		#footerTime {
+			float: right;
+		}
 	}
 }
+
+#videoContainer {
+	#video {
+		height: 100%;
+		width: 100%;
+	}
+}
+

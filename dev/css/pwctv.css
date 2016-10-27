@@ -2,22 +2,13 @@ body {
   margin: 0;
   font-family: Helvetica, sans-serif;
 }
-#slides {
+#slidesContainer #slides {
   position: absolute;
   top: 0;
-}
-#player {
-  display: none;
-  height: 100%;
-  width: 100%;
-}
-#mainContainer {
-  position: absolute;
-  width: 100%;
   height: 80%;
-  background-color: black;
+  width: 100%;
 }
-#footer {
+#slidesContainer #footer {
   position: absolute;
   top: 80%;
   height: 20%;
@@ -25,13 +16,17 @@ body {
   background-color: #222;
   color: white;
 }
-#footer p {
+#slidesContainer #footer p {
   font-size: 4vw;
   padding: 0 10%;
 }
-#footer #date {
+#slidesContainer #footer #footerDate {
   float: left;
 }
-#footer #time {
+#slidesContainer #footer #footerTime {
   float: right;
+}
+#videoContainer #video {
+  height: 100%;
+  width: 100%;
 }

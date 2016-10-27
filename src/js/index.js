@@ -1,60 +1,72 @@
-var timeOptions = {
-	hour: '2-digit', minute: '2-digit'
-};
+function switchContainer(toSwitchTo) {
+	$(current.main).fadeOut(1000);
+	$(toSwitchTo).fadeIn(1000);
 
-var dateElem;
-var timeElem;
-var slidesElem;
-var playerElem;
-
-var loops = 0;
-function loop() {
-  loops++;
-
-	var currentDate = new Date();
-
-	dateElem.innerHTML = currentDate.toDateString();
-	timeElem.innerHTML = currentDate.toLocaleTimeString('en-us', timeOptions);
-
-  if(0 == (loops % 240)) {
-    playVideo();
-  } else {
-  	setTimeout(loop, 1000);
-  }
+	toSwitchTo.initial();
+	current = toSwitchTo;
 }
 
-var videos = [
-    'c-cab',
-    'd-dab'
-];
-
-function randomVideoURL() {
-  return 'http://jackharrhy.com/videos/pwctv/'+videos[Math.floor(Math.random() * videos.length)]+'_PWCTV.mp4';
-}
-
-function playVideo() {
-  slidesElem.style.display = 'none';
-  playerElem.style.display = 'block';
-
-  playerElem.onended = function() {
-    revertToSlides();
-  };
-
-  playerElem.src = randomVideoURL();
-}
-
-function revertToSlides() {
-  slidesElem.style.display = 'block';
-  playerElem.style.display = 'none';
-
-  loop();
-}
+var container, current;
 
 document.addEventListener('DOMContentLoaded', function(event) {
-	dateElem = document.getElementById('date');
-	timeElem = document.getElementById('time');
-  slidesElem = document.getElementById('slides');
-  playerElem = document.getElementById('player');
+	container = {
+		slides: {
+			main: document.getElementById('slidesContainer'),
+			slide: document.getElementById('slides'),
 
-  loop();
+			footerDate: document.getElementById('footerDate'),
+			footerTime: document.getElementById('footerTime'),
+
+			timeOptions: {
+				hour: '2-digit',
+				minute: '2-digit'
+			},
+		
+			initial: function() {
+				setTimeout(switchContainer(container.video), 1000);
+			},
+			loop: function() {
+				var currentDate = new Date();
+
+				this.footerDate.innerHTML = currentDate.toDateString();
+				this.footerTime.innerHTML = currentDate.toLocaleTimeString('en-us', this.timeOptions);
+			}
+		},
+		video: {
+			main: document.getElementById('videoContainer'),
+			video: document.getElementById('video'),
+
+			videos: [
+				'c-cab',
+				'd-dab'
+			],
+
+			initial: function() {
+				this.video.onended = function() {
+					setTimeout(switchContainer(container.slides), 10000);
+				}
+
+				this.video.src = 'http://jackharrhy.com/videos/pwctv/'+this.videos[Math.floor(Math.random() * this.videos.length)]+'_PWCTV.mp4';
+			},
+			loop: function() {
+				// None
+			}
+		}
+	};
+
+	current = container.slides;
+
+	current.initial();
+	loop();
+	realtimeLoop();
 });
+
+function realtimeLoop() {
+	requestAnimationFrame(loop);
+}
+
+function loop() {
+	current.loop();
+	setTimeout(loop, 1000);
+}
+
