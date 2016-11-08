@@ -69,6 +69,10 @@ function loop() {
 	setTimeout(loop, 1000);
 }
 
+setInterval(function () {
+	window.location.reload();
+}, 800000);
+
 },{}]},{},[1])
 
 
