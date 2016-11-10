@@ -1,23 +1,16 @@
-var express = require('express');
-var app = express();
+var app = require('http').createServer(handler);
+var io = require('socket.io')(app);
 
-app.set('view engine', 'pug');
-app.get('/', function(req, res) {
-	res.render('index');
-});
-app.get('/control', function(req, res) {
-	res.render('control');
-});
+app.listen(1959);
 
-app.use('/static', express.static(__dirname + '/static/'));
+function handler(req, res) {
+	res.writeHead(200);
+	res.end('pwctv-server');
+}
 
-var io = require('socket.io').listen(app.listen(4000, function() {
-}));
-
-io.sockets.on('connection', function(socket) {
-	console.log('[=] Socket "' + socket.handshake.headers.host + '" connected');
-
-	socket.on('control', function(thingToDo) {
-    io.emit('update', thingToDo);
+io.on('connection', function (socket) {
+	socket.emit('news', { hello: 'world' });
+	socket.on('my other event', function(data) {
+		console.log(data);
 	});
 });

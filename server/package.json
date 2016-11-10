@@ -1,0 +1,8 @@
+{
+  "name": "pwctv-server",
+  "description": "server for a web based school information board",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jackharrhy/pwctv.git"
+  }
+}

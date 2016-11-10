@@ -6,6 +6,16 @@ body {
   margin: 0;
   font-family: Helvetica, sans-serif;
 }
+#textOverlayContainer {
+  display: none;
+}
+#textOverlayContainer #textOverlay {
+  font-size: 3em;
+  text-align: center;
+}
+#slidesContainer {
+  display: none;
+}
 #slidesContainer #slides {
   position: absolute;
   top: 0;
