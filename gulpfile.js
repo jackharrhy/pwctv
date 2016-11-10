@@ -14,14 +14,14 @@ var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 
 var browserSync = require('browser-sync').create();
-gulp.task('serve', ['pug','less','browserify'], function() {
+gulp.task('serve', ['pug','less','browserify-pwctv','browserify-pwctv-control'], function() {
 	browserSync.init({
 		server: './dev'
 	});
 
 	gulp.watch('src/**/*.pug', ['pug']);
 	gulp.watch('src/css/**/*.less', ['less']);
-	gulp.watch('src/js/**/*.js', ['browserify']);
+	gulp.watch('src/js/**/*.js', ['browserify-pwctv', 'browserify-pwctv-control']);
 });
 
 // Pug -> HTML
@@ -43,9 +43,9 @@ gulp.task('less', function () {
 });
 
 // JS -> Bundled JS
-gulp.task('browserify', function () {
+gulp.task('browserify-pwctv', function () {
 	var b = browserify({
-		entries: './src/js/index.js',
+		entries: ['./src/js/pwctv/index.js'],
 		debug: true
 	}).transform(babelify);
 
@@ -58,6 +58,22 @@ gulp.task('browserify', function () {
 	.pipe(gulp.dest('./dev/js'))
 	.pipe(browserSync.stream());
 });
+gulp.task('browserify-pwctv-control', function () {
+	var b = browserify({
+		entries: ['./src/js/pwctv-control/index.js'],
+		debug: true
+	}).transform(babelify);
+
+	return b.bundle()
+	.on('error', function(err) { console.log(err); this.emit('end'); })
+	.pipe(source('pwctv-control.js'))
+	.pipe(buffer())
+	.pipe(sourcemaps.init({ loadMaps: true }))
+	.pipe(sourcemaps.write('./'))
+	.pipe(gulp.dest('./dev/js'))
+	.pipe(browserSync.stream());
+});
+
 
 gulp.task('default', ['serve']);
 
