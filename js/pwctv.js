@@ -1,14 +1,13 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var socket = io({ path: '/pwctv/server' });
+var socket = io({ path: '/pwctv/server/socket.io' });
 
 function switchContainer(toSwitchTo, optionalArg) {
-	if (current) {
+	if(current) {
 		$(current.main).fadeOut(1000);
 	}
 
 	$(toSwitchTo.main).fadeIn(1000);
 
-	if (optionalArg) {
+	if(optionalArg) {
 		toSwitchTo.initial(optionalArg);
 	} else {
 		toSwitchTo.initial();
@@ -18,25 +17,26 @@ function switchContainer(toSwitchTo, optionalArg) {
 
 var container, current;
 
-socket.on('textAlert', function (data) {
-	switchContainer(container.textOverlay);
+socket.on('textOverlay', function(text, time) {
+	console.log(text, time);
+	switchContainer(container.textOverlay, {text: text, time: time});
 });
 
-document.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener('DOMContentLoaded', function(event) {
 	container = {
 		textOverlay: {
 			main: document.getElementById('textOverlayContainer'),
 			text: document.getElementById('textOverlay'),
 
-			curData: '',
+			curData: {},
 
-			initial: function (newData) {
+			initial: function(newData) {
 				this.curData = newData;
 				this.text.innerHTML = this.curData.text;
 
-				setTimeout(switchContainer.bind(null, container.slides), this.curData.returnTime);
+				setTimeout(switchContainer.bind(null, container.slides), this.curData.time * 1000);
 			},
-			loop: function () {
+			loop: function() {
 				// nothing...
 			}
 		},
@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
 				hour: '2-digit',
 				minute: '2-digit'
 			},
-
-			initial: function () {
-				setTimeout(switchContainer.bind(null, container.video), 3000);
+		
+			initial: function() {
+				setTimeout(switchContainer.bind(null, container.video), 120000);
 			},
-			loop: function () {
+			loop: function() {
 				var currentDate = new Date();
 
 				this.footerDate.innerHTML = currentDate.toDateString();
@@ -66,18 +66,22 @@ document.addEventListener('DOMContentLoaded', function (event) {
 			main: document.getElementById('videoContainer'),
 			video: document.getElementById('video'),
 
-			videos: ['c-cab', 'd-dab'],
+			videos: [
+				'c-cab',
+				'd-dab'
+			],
 
-			initial: function () {
-				this.video.onended = function () {
+			initial: function() {
+				this.video.onended = function() {
 					console.log('end');
 					switchContainer(container.slides);
-				};
-				setTimeout(switchContainer.bind(null, container.slides), 3000);
-
-				this.video.src = 'http://jackharrhy.com/videos/pwctv/' + this.videos[Math.floor(Math.random() * this.videos.length)] + '_PWCTV.mp4';
+				}
+				setTimeout(switchContainer.bind(null, container.slides), 120000);
+	
+				videoString = this.videos[Math.floor(Math.random() * this.videos.length)];
+				this.video.src = 'http://jackharrhy.com/videos/pwctv/'+videoString+'_PWCTV.mp4';
 			},
-			loop: function () {
+			loop: function() {
 				// None
 			}
 		}
@@ -97,11 +101,6 @@ function loop() {
 	setTimeout(loop, 1000);
 }
 
-setInterval(function () {
+setInterval(function() {
 	window.location.reload();
 }, 800000);
-
-},{}]},{},[1])
-
-
-//# sourceMappingURL=pwctv.js.map
