@@ -5,15 +5,16 @@ html, body {
 body {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
+	font-weight: bold;
 }
 
 #textOverlayContainer {
 	display: none;
+	position: absolute;
+	width: 100%;
 }
-
 #textOverlayContainer #textOverlay {
 	font-size: 3em;
-
 	text-align: center;
 }
 
@@ -33,7 +34,7 @@ body {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background-color: #222;
+	background-color: #323133;
 }
 #videoContainer #video {
 	width: 100%;
@@ -46,7 +47,7 @@ body {
 	height: 20%;
 	width: 100%;
 
-	background-color: #222;
+	background-color: #323133;
 	color: white;
 }
 #footer p {
@@ -59,4 +60,3 @@ body {
 #footer #footerTime {
 	float: right;
 }
-

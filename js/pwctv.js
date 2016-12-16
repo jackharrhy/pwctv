@@ -1,4 +1,9 @@
-var socket = io({ path: '/pwctv/server/socket.io' });
+var peers = [
+	'http://localhost:1959/gun'
+];
+var gun = Gun(peers);
+
+var textOverlay = gun.get('textOverlay');
 
 function switchContainer(toSwitchTo, optionalArg) {
 	if(current) {
@@ -17,24 +22,24 @@ function switchContainer(toSwitchTo, optionalArg) {
 
 var container, current;
 
-socket.on('textOverlay', function(text, time) {
-	console.log(text, time);
-	switchContainer(container.textOverlay, {text: text, time: time});
-});
-
 document.addEventListener('DOMContentLoaded', function(event) {
 	container = {
 		textOverlay: {
 			main: document.getElementById('textOverlayContainer'),
 			text: document.getElementById('textOverlay'),
-
-			curData: {},
+			curData: {text:'',time:0},
 
 			initial: function(newData) {
 				this.curData = newData;
 				this.text.innerHTML = this.curData.text;
+				if(this.curData.time > (1000 * 30)) {
+					this.curData.time = 1000 * 30;
+				}
 
-				setTimeout(switchContainer.bind(null, container.slides), this.curData.time * 1000);
+				setTimeout(this.exit, this.curData.time * 1000);
+			},
+			exit: function() {
+				switchContainer(container.slides);
 			},
 			loop: function() {
 				// nothing...
@@ -43,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		slides: {
 			main: document.getElementById('slidesContainer'),
 			slide: document.getElementById('slides'),
-
 			footerDate: document.getElementById('footerDate'),
 			footerTime: document.getElementById('footerTime'),
 
@@ -51,9 +55,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 				hour: '2-digit',
 				minute: '2-digit'
 			},
-		
+
 			initial: function() {
-				setTimeout(switchContainer.bind(null, container.video), 120000);
+				setTimeout(this.exit, 120000);
+			},
+			exit: function() {
+				switchContainer(container.video);
 			},
 			loop: function() {
 				var currentDate = new Date();
@@ -65,10 +72,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		video: {
 			main: document.getElementById('videoContainer'),
 			video: document.getElementById('video'),
-
 			videos: [
-				'c-cab',
-				'd-dab'
+				'peprally'
 			],
 
 			initial: function() {
@@ -76,10 +81,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
 					console.log('end');
 					switchContainer(container.slides);
 				}
-				setTimeout(switchContainer.bind(null, container.slides), 120000);
-	
+
 				videoString = this.videos[Math.floor(Math.random() * this.videos.length)];
-				this.video.src = 'http://jackharrhy.com/videos/pwctv/'+videoString+'_PWCTV.mp4';
+				this.video.src = 'http://jackharrhy.com/videos/pwctv/'+videoString+'.mp4';
 			},
 			loop: function() {
 				// None
@@ -90,6 +94,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	switchContainer(container.slides);
 	loop();
 	realtimeLoop();
+
+	textOverlay.on(function(data) {
+		if(data.text !== container.textOverlay.curData.text) {
+			container.textOverlay.text.style.fontSize = String(data.fontSize) + 'em';
+
+			container.textOverlay.curData.text = data.text;
+			switchContainer(container.textOverlay, data);
+		}
+	});
 });
 
 function realtimeLoop() {
