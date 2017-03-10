@@ -1,10 +1,3 @@
-var peers = [
-	'http://localhost:1959/gun'
-];
-var gun = Gun(peers);
-
-var textOverlay = gun.get('textOverlay');
-
 function switchContainer(toSwitchTo, optionalArg) {
 	if(current) {
 		$(current.main).fadeOut(1000);
@@ -73,12 +66,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
 			main: document.getElementById('videoContainer'),
 			video: document.getElementById('video'),
 			videos: [
-				'peprally'
+				'donut'
 			],
 
 			initial: function() {
 				this.video.onended = function() {
-					console.log('end');
 					switchContainer(container.slides);
 				}
 
@@ -94,15 +86,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	switchContainer(container.slides);
 	loop();
 	realtimeLoop();
-
-	textOverlay.on(function(data) {
-		if(data.text !== container.textOverlay.curData.text) {
-			container.textOverlay.text.style.fontSize = String(data.fontSize) + 'em';
-
-			container.textOverlay.curData.text = data.text;
-			switchContainer(container.textOverlay, data);
-		}
-	});
 });
 
 function realtimeLoop() {
