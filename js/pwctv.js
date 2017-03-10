@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 			},
 
 			initial: function() {
-				setTimeout(this.exit, 120000);
+				setTimeout(this.exit, 30000);
 			},
 			exit: function() {
 				switchContainer(container.video);
@@ -66,7 +66,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
 			main: document.getElementById('videoContainer'),
 			video: document.getElementById('video'),
 			videos: [
-				'donut'
+				'donut',
+        'keat',
+        'bball',
+        'grease',
+        'will'
 			],
 
 			initial: function() {
