@@ -70,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         'keat',
         'bball',
         'grease',
-        'will'
+        'will',
+				'skate'
 			],
 
 			initial: function() {
