@@ -1,25 +1,13 @@
 {
-  "name": "pwc-tv-server",
-  "version": "0.1.0",
-  "description": "server software to disense information to be displayed",
+  "name": "pwctv-server",
+  "description": "server for a web based school information board",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackharrhy/pwc-tv.git"
+    "url": "https://github.com/jackharrhy/pwctv-server.git"
   },
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "javascript",
-    "server",
-    "express"
-  ],
-  "author": "Jack Arthur Harrhy",
-  "license": "MIT",
   "dependencies": {
-    "dateformat": "^1.0.12",
     "express": "^4.14.0",
-    "winston": "^2.2.0"
+    "gun": "^0.3.9991",
+    "readline-sync": "^1.4.5"
   }
 }

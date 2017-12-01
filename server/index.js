@@ -1,27 +1,26 @@
+var readlineSync = require('readline-sync');
+var secretKey = readlineSync.question('What\'s the secret password?');
+
 var express = require('express');
-
-var winston = require('winston');
-var dateFormat = require('dateformat');
-
-var date = new Date();
-
-winston.add(winston.transports.File, {
-	filename: './logs/' + dateFormat(date, 'isoDateTime') + '.log'
-});
-
-winston.info('starting');
-
 var app = express();
 
-function logger(req, res, next) {
-	winston.info('request');
+var Gun = require('gun');
+var gun = Gun();
 
-	next();
-}
-app.use(logger);
-
-app.use(express.static('../client/dist/'));
-
-app.listen(1959, function() {
-	winston.info('started');
+gun.wsp(app, function(req, res, next) {
+	for (var property in req.body) {
+    if(req.body.hasOwnProperty(property)) {
+			if(req.body[property].secretKey === secretKey) {
+				next(req, res);
+			}
+    }
+	}
 });
+
+var textOverlay = gun.get('textOverlay');
+
+textOverlay.on(function(update) {
+	console.log('textOverlay: ', update);
+});
+
+app.listen(1959);

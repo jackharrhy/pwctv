@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PWCTV - Control</title>
+		<link rel="stylesheet", href="css/pwctv-control.css">
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="css/mui.min.css" rel="stylesheet" type="text/css" />
+		<script src="js/mui.min.js"></script>
+	</head>
+	<body>
+		<h1 class="title">PWCTV</h1>
+
+		<div class="mui-container">
+			<div class="mui-panel">
+				<h1>Secret</h1>
+				<div class="mui-textfield">
+					<input id="secretKey" type="password" placeholder="Enter the secret password..."></textarea>
+				</div>
+			</div>
+
+			<div class="mui-panel">
+				<form id="textOverlayForm">
+					<h1>Text Overlay</h1>
+					<div class="mui-textfield">
+						<textarea placeholder="Enter your text..."></textarea>
+					</div>
+					<div class="mui-textfield">
+						<input type="number" placeholder="What font size?">
+					</div>
+					<div class="mui-textfield">
+						<input type="number" placeholder="How many seconds?">
+					</div>
+					<button class="mui-btn mui-btn--primary mui-btn--raised">Submit</button>
+				</form>
+			</div>
+		</div>
+
+		<script src="js/gun.js"></script>
+		<script src="js/pwctv-control.js"></script>
+	</body>
+</html>
